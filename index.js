@@ -1,0 +1,77 @@
+/* Importaciones */
+import express from 'express';
+import environments from './src/config/environments.js'; // Importamos las variables de entorno
+import connection from './src/database/db.js' // Importamos la conexion a la base de datos
+import cors from 'cors'; // Middleware para permitir peticiones desde el frontend
+
+const app = express();
+const PORT = environments.port;
+
+
+/* MIDDLEWARES */
+/* Middlewares de aplicacion -> aplicados para todas las rutas*/ 
+app.use(express.json()); // parsear el cuerpo en solicitudes PUT y POST
+app.use(cors()); // Middleware CORS para permitir peticiones desde el frontend
+
+
+/* Rutas - ENDPOINTS */
+// Prueba de servidor
+app.get("/", (req, res) => {
+    res.send("¡Hola, mundo!");
+});
+
+
+
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+})
+
+// 1. Primer endpoint GET -> Traer todos los productos
+app.get("/productos", async (req, res) => {
+
+    try {
+        let sql = `SELECT * from productos;`; // hacemos la consulta sql para mostrar los prod
+        const [ rows ] = await connection.query(sql); // desestructuramos la consulta para obtener filas
+
+        res.status(200).json({
+            payload: rows,
+            message: rows.length === 0 ? "No hay productos disponibles" : "Productos obtenidos correctamente"
+        });
+
+    } catch (error) {
+        console.log("Error al obtener los productos:", error);
+        res.status(500).json({
+            error: "Error al obtener los productos"
+        });
+    }
+});
+
+// 2. Segundo endpoint GET -> Traer un producto por ID
+
+app.get("/productos/:id", async (req, res) => {
+
+    try {
+
+        let { id } = req.params; // obtenemos el ID del producto desde los parametros de la ruta
+
+        let sql = `SELECT * FROM productos WHERE id = ?`; // consulta SQL para obtener el producto por ID
+        let [ rows ] = await connection.query(sql, [id]); // ejecutamos la consulta y desestructuramos para obtener las filas
+
+        // verificacion de si se encontro el producto
+        if (rows.length === 0) {
+            return res.status(404).json({
+                error: "Producto no encontrado"
+            });
+        }
+
+        res.status(200).json({
+            payload: rows // devolvemos el producto encontrado
+        });
+
+    } catch (error) {
+        console.log("Error al obtener el producto:", error);
+        res.status(500).json({
+            error: "Error al obtener el producto"
+        });
+    }
+});

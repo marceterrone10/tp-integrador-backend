@@ -1,0 +1,6 @@
+cors,
+dotenv,
+ejs,
+express,
+mysql2,
+nodemon

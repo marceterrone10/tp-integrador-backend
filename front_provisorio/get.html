@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!---
+    <main id="contenedor-get">
+        <div id="productos-container">
+            <h2>Consultar producto</h2>
+            <form id="getProduct-form">
+                <label for="idProd">ID Producto: </label>
+                <input type="number" name="idProd" id="idProd" required>
+                <input type="submit" value="Consultar">
+            </form>
+        </div>
+        <div id="producto-detalle-container">
+            <ul id="producto-detalle"></ul>
+        </div>
+    </main> -->
+
+    <div class="wrapper">
+        <div class="sidebar">
+            <h2>Sportswear <br> Dashboard</h2>
+            <ul>
+                <li><a href="index.html">GET</a></li>
+                <li><a href="get.html">GET: id</a></li>
+                <li><a href="post.html">POST</a></li>
+                <li><a href="put.html">PUT</a></li>
+                <li><a href="delete.html">DELETE</a></li>
+            </ul>
+        </div>
+        <main id="contenedor-get">
+            <div id="productos-container">
+                <h2>Consultar producto</h2>
+                <form id="getProduct-form">
+                    <label for="idProd">ID Producto: </label>
+                    <input type="number" name="idProd" id="idProd" required>
+                    <input type="submit" value="Consultar">
+                </form>
+            </div>
+            <div id="producto-detalle-container">
+                <ul id="producto-detalle"></ul>
+            </div>
+        </main>
+    </div>
+
+    <script src="./app.js"></script>
+</body>
+</html>
