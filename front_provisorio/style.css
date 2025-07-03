@@ -59,3 +59,21 @@ body {
 main {
     margin-left: 300px;
 }
+
+.producto-item {
+    background: #fff;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.producto-imagen {
+    width: 75px;
+    height: 75px;
+    object-fit: cover;
+    border-radius: 5px;
+}

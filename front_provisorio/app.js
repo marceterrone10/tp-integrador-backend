@@ -26,13 +26,11 @@ function mostrarProductos(productos) {
     listaProductos.forEach(producto => {
         htmlProductos += `
             <li class="producto-item">
-                <hr>
-                <p>ID: ${producto.id}</p>
                 <img src="${producto.imagen}" class="producto-imagen">
+                <p>ID: ${producto.id}</p>
                 <h2>${producto.nombre}</h2>
                 <p>Precio: $${producto.precio}</p>
                 <p>Marca: ${producto.marca}</p>
-                <hr>
             </li>
                 `;
     }); // inyecto cada producto al html
