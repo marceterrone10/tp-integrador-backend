@@ -4,6 +4,7 @@ import environments from './src/config/environments.js'; // Importamos las varia
 import connection from './src/database/db.js' // Importamos la conexion a la base de datos
 import cors from 'cors'; // Middleware para permitir peticiones desde el frontend
 
+
 const app = express();
 const PORT = environments.port;
 
@@ -72,6 +73,35 @@ app.get("/productos/:id", async (req, res) => {
         console.log("Error al obtener el producto:", error);
         res.status(500).json({
             error: "Error al obtener el producto"
+        });
+    }
+});
+
+// 3. Tercer endpoint POST -> Crear un producto
+app.post("/productos", async (req, res) => {
+    try {
+
+        let { nombre, marca, precio, imagen } = req.body; // obtenemos los datos del producto desde el cuerpo de la solicitud
+        if (!nombre || !marca || !precio || !imagen) {
+            return res.status(400).json({
+                message: "Faltan datos obligatorios"
+            });
+        };
+
+        //consulta SQL para insertar un nuevo producto
+        let sql = `INSERT INTO productos (nombre, marca, precio, imagen) VALUES (?, ?, ?, ?)`;
+        let [ rows ] = await connection.query(sql, [nombre, marca, precio, imagen]); // ejecutamos la consulta y desestructuramos para obtener las filas
+
+        res.status(201).json({
+            message: "Producto creado correctamente",
+            productoId: rows.insertId, // devolvemos el ID del producto creado
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "Error al crear el producto",
+            error: error.message
         });
     }
 });

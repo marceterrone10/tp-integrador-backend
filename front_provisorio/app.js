@@ -26,10 +26,13 @@ function mostrarProductos(productos) {
     listaProductos.forEach(producto => {
         htmlProductos += `
             <li class="producto-item">
+                <hr>
+                <p>ID: ${producto.id}</p>
                 <img src="${producto.imagen}" class="producto-imagen">
                 <h2>${producto.nombre}</h2>
                 <p>Precio: $${producto.precio}</p>
                 <p>Marca: ${producto.marca}</p>
+                <hr>
             </li>
                 `;
     }); // inyecto cada producto al html
@@ -40,6 +43,7 @@ obtenerDatosProductos();
 
 /* Script para obtener un producto por ID */
 
+//variables
 let getId_lista = document.getElementById("producto-detalle");
 let getProduct_form = document.getElementById("getProduct-form");
 
@@ -71,3 +75,5 @@ getProduct_form.addEventListener("submit", async( e ) => {
         console.log("Error al obtener el producto:", error);
     }
 })
+
+
