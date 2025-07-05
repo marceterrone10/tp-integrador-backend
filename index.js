@@ -2,6 +2,7 @@
 import express from 'express';
 import environments from './src/config/environments.js'; // Importamos las variables de entorno
 import connection from './src/database/db.js' // Importamos la conexion a la base de datos
+import { loggerUrl } from './src/middlewares/middlewares.js'; // Importamos el middleware logger para registrar las URLs de las peticiones
 import cors from 'cors'; // Middleware para permitir peticiones desde el frontend
 
 
@@ -13,7 +14,7 @@ const PORT = environments.port;
 /* Middlewares de aplicacion -> aplicados para todas las rutas*/ 
 app.use(express.json()); // parsear el cuerpo en solicitudes PUT y POST
 app.use(cors()); // Middleware CORS para permitir peticiones desde el frontend
-
+app.use(loggerUrl); // Middleware personalizado para registrar las URLs de las peticiones
 
 /* Rutas - ENDPOINTS */
 // Prueba de servidor
@@ -81,16 +82,16 @@ app.get("/productos/:id", async (req, res) => {
 app.post("/productos", async (req, res) => {
     try {
 
-        let { nombre, marca, precio, imagen } = req.body; // obtenemos los datos del producto desde el cuerpo de la solicitud
-        if (!nombre || !marca || !precio || !imagen) {
+        let { nombre, marca, precio, imagen, categoria, activo } = req.body; // obtenemos los datos del producto desde el cuerpo de la solicitud
+        if (!nombre || !marca || !precio || !imagen || !categoria || activo === undefined) {
             return res.status(400).json({
                 message: "Faltan datos obligatorios"
             });
         };
 
         //consulta SQL para insertar un nuevo producto
-        let sql = `INSERT INTO productos (nombre, marca, precio, imagen) VALUES (?, ?, ?, ?)`;
-        let [ rows ] = await connection.query(sql, [nombre, marca, precio, imagen]); // ejecutamos la consulta y desestructuramos para obtener las filas
+        let sql = `INSERT INTO productos (nombre, marca, precio, categoria, activo, imagen) VALUES (?, ?, ?, ?, ?, ?)`;
+        let [ rows ] = await connection.query(sql, [nombre, marca, precio, categoria, activo, imagen]); // ejecutamos la consulta y desestructuramos para obtener las filas
 
         res.status(201).json({
             message: "Producto creado correctamente",

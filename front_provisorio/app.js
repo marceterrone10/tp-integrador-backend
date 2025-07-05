@@ -31,6 +31,8 @@ function mostrarProductos(productos) {
                 <h2>${producto.nombre}</h2>
                 <p>Precio: $${producto.precio}</p>
                 <p>Marca: ${producto.marca}</p>
+                <p class="producto-categoria"> Categoria: ${producto.categoria}</p>
+                <p>Activo: ${producto.activo ? "Sí" : "No"}</p>
             </li>
                 `;
     }); // inyecto cada producto al html
@@ -61,9 +63,12 @@ getProduct_form.addEventListener("submit", async( e ) => {
         let htmlProductos = `
             <li class="producto-item">
                 <img src="${producto.imagen}" class="producto-imagen">
+                <p>ID: ${producto.id}</p>
                 <h2>${producto.nombre}</h2>
                 <h3>${producto.marca}</h3>
                 <p>Precio: $${producto.precio}</p>
+                <p class="producto-categoria">Categoria: ${producto.categoria}</p>
+                <p>Activo: ${producto.activo ? "Sí" : "No"}</p>
             </li>
         `; // creo el html del producto
 
