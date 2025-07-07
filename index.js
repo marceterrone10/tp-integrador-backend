@@ -18,6 +18,7 @@ app.use(loggerUrl); // Middleware personalizado para registrar las URLs de las p
 
 /* Rutas - ENDPOINTS */
 // Prueba de servidor
+// (req, res) : constantemente escucha interaciones del cliente ( req: extrae datos , res: devuelve datos)
 app.get("/", (req, res) => {
     res.send("¡Hola, mundo!");
 });
@@ -105,4 +106,70 @@ app.post("/productos", async (req, res) => {
             error: error.message
         });
     }
+// 4. PUT -> Modificar un producto existente por ID
+app.put("/productos/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { nombre, marca, precio, categoria, activo, imagen } = req.body;
+
+        // Validación básica
+        if (!nombre || !marca || !precio || !categoria || activo === undefined || !imagen) {
+            return res.status(400).json({
+                message: "Faltan datos obligatorios"
+            });
+        }
+
+        // Verificamos si existe el producto
+        const [existe] = await connection.query(`SELECT * FROM productos WHERE id = ?`, [id]);
+        if (existe.length === 0) {
+            return res.status(404).json({
+                message: "Producto no encontrado"
+            });
+        }
+
+        const sql = `
+            UPDATE productos 
+            SET nombre = ?, marca = ?, precio = ?, categoria = ?, activo = ?, imagen = ?
+            WHERE id = ?;
+        `;
+        await connection.query(sql, [nombre, marca, precio, categoria, activo, imagen, id]);
+
+        res.status(200).json({
+            message: "Producto actualizado correctamente"
+        });
+
+    } catch (error) {
+        console.log("Error al modificar el producto:", error);
+        res.status(500).json({
+            message: "Error al modificar el producto"
+        });
+    }
+});
+// 5. DELETE -> Eliminar un producto por ID
+app.delete("/productos/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        // Verificamos si existe el producto
+        const [existe] = await connection.query(`SELECT * FROM productos WHERE id = ?`, [id]);
+        if (existe.length === 0) {
+            return res.status(404).json({
+                message: "Producto no encontrado"
+            });
+        }
+
+        // Eliminamos el producto
+        await connection.query(`DELETE FROM productos WHERE id = ?`, [id]);
+
+        res.status(200).json({
+            message: "Producto eliminado correctamente"
+        });
+
+    } catch (error) {
+        console.log("Error al eliminar el producto:", error);
+        res.status(500).json({
+            message: "Error al eliminar el producto"
+        });
+    }
+});
 });

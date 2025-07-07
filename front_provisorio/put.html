@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <div class="wrapper">
+        <div class="sidebar">
+            <h2>Sportswear <br> Dashboard</h2>
+            <ul>
+                <li><a href="index.html">GET</a></li>
+                <li><a href="get.html">GET: id</a></li>
+                <li><a href="post.html">POST</a></li>
+                <li><a href="put.html">PUT</a></li>
+                <li><a href="delete.html">DELETE</a></li>
+            </ul>
+        </div>
+        <h1 class="titulo">Actualizar producto</h1>
+        <p class="titulo">Primero buscamos el id, luego generamos un formulario para actualizar los campos</p>
+        </div>
+
+        <main id="contenedor-get">
+
+            <div id="getProduct-container" class="crudForm-container">
+                <h2>Consultar producto</h2>
+
+                <form id="getProduct-form">
+                    <label for="idProd">Id producto</label>
+                    <input type="number" name="idProd" id="idProd" required>
+
+                    <input type="submit" value="cambiar producto">
+                </form>
+            </div>
+
+            <div id="getId-container">
+                <ul id="getId-list">
+                </ul>
+            </div>
+
+            <div id="updateForm-container"></div>
+        </main>
