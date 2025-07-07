@@ -1,4 +1,4 @@
-const url = "http://localhost: 3000"; // URL de la API
+const url = "http://localhost:3000"; // URL de la API
 
 
 /* Script para obtener productos */ 

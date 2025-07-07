@@ -106,60 +106,63 @@ app.post("/productos", async (req, res) => {
             error: error.message
         });
     }
-// 4. PUT -> Modificar un producto existente por ID
-app.put("/productos/:id", async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { nombre, marca, precio, categoria, activo, imagen } = req.body;
 
-        // Validación básica
-        if (!nombre || !marca || !precio || !categoria || activo === undefined || !imagen) {
+});
+
+// 4. PUT -> Modificar un producto existente por ID
+app.put("/productos", async (req, res) => {
+    try {
+        let { id, nombre, marca, precio, imagen, categoria, activo } = req.body; // obtenemos los datos del producto desde el cuerpo de la solicitud
+
+        if(!id || !nombre || !marca || !precio || !imagen || !categoria || activo === undefined) {
             return res.status(400).json({
                 message: "Faltan datos obligatorios"
             });
         }
 
-        // Verificamos si existe el producto
-        const [existe] = await connection.query(`SELECT * FROM productos WHERE id = ?`, [id]);
-        if (existe.length === 0) {
+        let sql = `UPDATE productos SET nombre = ?, marca = ?, precio = ?, categoria = ?, activo = ?, imagen = ? WHERE id = ?`; // consulta SQL para actualizar el producto
+        let [ rows ] = await connection.query(sql, [nombre, marca, precio, categoria, activo, imagen, id]); // ejecutamos la consulta y desestructuramos para obtener el resultado
+
+
+        if(rows.affectedRows === 0) {
             return res.status(404).json({
                 message: "Producto no encontrado"
             });
         }
-
-        const sql = `
-            UPDATE productos 
-            SET nombre = ?, marca = ?, precio = ?, categoria = ?, activo = ?, imagen = ?
-            WHERE id = ?;
-        `;
-        await connection.query(sql, [nombre, marca, precio, categoria, activo, imagen, id]);
 
         res.status(200).json({
             message: "Producto actualizado correctamente"
         });
 
+
     } catch (error) {
-        console.log("Error al modificar el producto:", error);
+        console.log("Error al actualizar el producto:", error);
         res.status(500).json({
-            message: "Error al modificar el producto"
+            message: "Error al actualizar el producto"
         });
     }
 });
+
+
 // 5. DELETE -> Eliminar un producto por ID
 app.delete("/productos/:id", async (req, res) => {
     try {
-        const { id } = req.params;
+        let { id } = req.params;
 
-        // Verificamos si existe el producto
-        const [existe] = await connection.query(`SELECT * FROM productos WHERE id = ?`, [id]);
-        if (existe.length === 0) {
-            return res.status(404).json({
-                message: "Producto no encontrado"
+        if(!id) {
+            return res.status(400).json({
+                message: "Falta el ID del producto a eliminar"
             });
         }
 
-        // Eliminamos el producto
-        await connection.query(`DELETE FROM productos WHERE id = ?`, [id]);
+        let sql = `DELETE FROM productos WHERE id = ?`; // consulta SQL para eliminar el producto por ID
+        let [ result ] = await connection.query(sql, [id]); // ejecutamos la consulta y desestructuramos para obtener el resultado
+
+        if(result.affectedRows === 0) {
+            return res.status(404).json({
+                message: "Producto no encontrado"
+            });
+        };
 
         res.status(200).json({
             message: "Producto eliminado correctamente"
@@ -171,5 +174,4 @@ app.delete("/productos/:id", async (req, res) => {
             message: "Error al eliminar el producto"
         });
     }
-});
 });
