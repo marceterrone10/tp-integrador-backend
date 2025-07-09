@@ -1,7 +1,6 @@
-const url = "http://localhost:3000"; // URL de la API
+const url = "http://localhost:3000/api"; // URL de la API
 
-
-/* Script para obtener productos */ 
+/* Script para obtener productos
 async function obtenerDatosProductos() {
     try {
         let respuesta = await fetch(`${url}/productos`); // Realizamos una solicitud GET a la API
@@ -39,7 +38,7 @@ function mostrarProductos(productos) {
 
     productosLista.innerHTML = htmlProductos;
 }
-obtenerDatosProductos();
+obtenerDatosProductos();*/
 
 /* Script para obtener un producto por ID */
 
@@ -76,8 +75,9 @@ getProduct_form.addEventListener("submit", async( e ) => {
 
     } catch (error) {
         console.log("Error al obtener el producto:", error);
+        alert("Error al obtener el producto. Verifique el ID ingresado.");
     }
-})
+});
 
 
 

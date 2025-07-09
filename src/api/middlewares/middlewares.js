@@ -1,5 +1,5 @@
 const loggerUrl = ((req, res, next) => {
-    console.log(`${req.methos} ${req.url} - ${new Date().toLocaleString()}`);
+    console.log(`${req.method} ${req.url} - ${new Date().toLocaleString()}`);
     next();
 }); // Middleware logger para analizar y registrar las solicitudes
 

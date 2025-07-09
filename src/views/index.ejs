@@ -1,0 +1,24 @@
+<%- include('partials/head') %> 
+<div class="wrapper">
+    <%- include('partials/nav') %>
+    <main id="contenedor-get">
+        <div id="productos-container">
+            <ul id="productos-lista">
+                <%  products.forEach(prod => {%>
+                <!-- Aquí se mostrarán los productos -->
+                    <li class="producto-item">
+                        <img src="<%= prod.imagen %>" class="producto-imagen">
+                        <p>ID: <%= prod.id %></p>
+                        <h2><%= prod.nombre %></h2>
+                        <p>Precio: $<%= prod.precio %></p>
+                        <p>Marca: <%= prod.marca %></p>
+                        <p class="producto-categoria"> Categoria: <%= prod.categoria %></p>
+                        <p>Activo: <%= prod.activo ? "Sí" : "No" %></p>
+                    </li>
+                <% }) %>
+            </ul>
+        </div>
+    </main>
+</div>
+<!--<script src="/js/app.js"></script> -->
+<%- include('partials/footer') %>

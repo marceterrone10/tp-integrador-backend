@@ -1,30 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="style.css">
-
-</head>
-<body>
-    <div class="wrapper">
-        <div class="sidebar">
-            <h2>Sportswear <br> Dashboard</h2>
-            <ul>
-                <li><a href="index.html">TRAER</a></li>
-                <li><a href="get.html">TRAER POR ID</a></li>
-                <li><a href="post.html">CREAR</a></li>
-                <li><a href="put.html">MODIFICAR</a></li>
-                <li><a href="delete.html">ELIMINAR</a></li>
-            </ul>
-        </div>
-    </div>
-
+<%- include('partials/head') %> 
+<div class="wrapper">
+    <%- include('partials/nav') %>
     <main id="contenedor-get">
-
         <div id="getProduct-container" class="crudForm-container">
-            <h2>Borrar producto</h2>
+            <h2><%= tittle %></h2>
 
             <form id="getProduct-form">
                 <label for="idProd">Id producto</label>
@@ -60,7 +39,7 @@
             let idProd = data.idProd.trim(); //trim() elimina espacios en blanco al inicio y al final
             console.log("ID del producto a eliminar:", idProd);
 
-            let response = await fetch(`http://localhost:3000/productos/${idProd}`);
+            let response = await fetch(`http://localhost:3000/api/productos/${idProd}`);
 
             if(!response.ok) {
                 throw new Error("Error al consultar el producto");
@@ -115,7 +94,7 @@
 
     async function eliminarProducto(idProd){
         try {
-            let response = await fetch(`http://localhost:3000/productos/${idProd}`, {
+            let response = await fetch(`http://localhost:3000/api/productos/${idProd}`, {
                 method: "DELETE"
             });
 
@@ -137,4 +116,4 @@
 
 
 </script>
-</html>
+<%- include('partials/footer') %>

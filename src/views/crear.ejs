@@ -1,27 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-    <div class="wrapper">
-        <div class="sidebar">
-            <h2>Sportswear <br> Dashboard</h2>
-            <ul>
-                <li><a href="index.html">TRAER</a></li>
-                <li><a href="get.html">TRAER POR ID</a></li>
-                <li><a href="post.html">CREAR</a></li>
-                <li><a href="put.html">MODIFICAR</a></li>
-                <li><a href="delete.html">ELIMINAR</a></li>
-            </ul>
-        </div>
-        <main id="contenedor-get">
+<%- include('partials/head') %> 
+<div class="wrapper">
+    <%- include('partials/nav') %>
+    <main id="contenedor-get">
             <div id="productos-container">
-                <h2>Dar de alta un nuevo producto</h2>
+                <h2><%= tittle %></h2>
                 <form autocomplete="off" id="altaProductos_form">
                     <label for="nombreProd">Nombre</label>
                     <input type="text" name="nombre" id="nombreProd" required>
@@ -34,15 +16,15 @@
 
                     <label for="categoriaProd">Categoria</label>
                     <select name="categoria" id="categoriaProd" required>
-                        <option value="zapatillas">Calzado</option>
-                        <option value="remera">Indumentaria</option>
-                        <option value="gorra">Accesorios</option>
+                        <option value="Calzado">Calzado</option>
+                        <option value="Indumentaria">Indumentaria</option>
+                        <option value="Accesorios">Accesorios</option>
                     </select>
 
                     <label for="activoProd">Activo</label>
                     <select name="activo" id="activoProd" required>
-                        <option value="true">Sí</option>
-                        <option value="false">No</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
                     </select>
 
                     <label for="imagenProd">Imagen</label>
@@ -60,7 +42,7 @@
 
     <script>
         let altaProductos_form = document.getElementById("altaProductos_form");
-        const url = "http://localhost:3000";
+        const url = "http://localhost:3000/api";
 
         altaProductos_form.addEventListener("submit", async ( e ) => {
             e.preventDefault();
@@ -102,5 +84,4 @@
         });
 
     </script>
-</body>
-</html>
+<%- include('partials/footer') %>
