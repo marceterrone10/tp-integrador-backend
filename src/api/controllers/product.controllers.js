@@ -1,4 +1,3 @@
-import connection from '../database/db.js'; // Importamos la conexion a la base de datos
 import { selectAllProducts, selectProductById, postProduct, modifyProduct, deleteProductById} from '../models/product.models.js'; // Importamos la funcion para obtener todos los productos
 
 export const getAllProducts = async (req, res) => {

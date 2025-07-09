@@ -1,0 +1,87 @@
+<%- include('partials/head') %> 
+<div class="wrapper">
+    <%- include('partials/nav') %>
+    <main id="contenedor-get">
+            <div id="productos-container">
+                <h2><%= tittle %></h2>
+                <form autocomplete="off" id="altaProductos_form">
+                    <label for="nombreProd">Nombre</label>
+                    <input type="text" name="nombre" id="nombreProd" required>
+
+                    <label for="marcaProd">Marca</label>
+                    <input type="text" name="marca" id="marcaProd" required>
+
+                    <label for="precioProd">Precio</label>
+                    <input type="number" name="precio" id="precioProd" required>
+
+                    <label for="categoriaProd">Categoria</label>
+                    <select name="categoria" id="categoriaProd" required>
+                        <option value="Calzado">Calzado</option>
+                        <option value="Indumentaria">Indumentaria</option>
+                        <option value="Accesorios">Accesorios</option>
+                    </select>
+
+                    <label for="activoProd">Activo</label>
+                    <select name="activo" id="activoProd" required>
+                        <option value="true">Sí</option>
+                        <option value="false">No</option>
+                    </select>
+
+                    <label for="imagenProd">Imagen</label>
+                    <input type="text" name="imagen" id="imagenProd" required>
+
+                    <input type="submit" value="Crear Producto">
+
+                </form>
+            </div>
+            <div id="producto-detalle-container">
+                <ul id="producto-detalle"></ul>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let altaProductos_form = document.getElementById("altaProductos_form");
+        const url = "http://localhost:3000/api";
+
+        altaProductos_form.addEventListener("submit", async ( e ) => {
+            e.preventDefault();
+
+            let formData = new FormData(e.target);
+
+            let data = Object.fromEntries(formData.entries());
+
+            if(!data.nombre || !data.marca || !data.precio || !data.imagen) {
+                alert("Por favor, completa todos los campos.");
+                return;
+            };
+
+            try { 
+                let response = await fetch(`${url}/productos`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(data)
+                    });
+
+                    if(response.ok) {
+                        console.log(response);
+                        let result = await response.json();
+                        console.log(result);
+                        alert("Producto creado exitosamente.");
+                    } else {
+                        let error = await response.json();
+                        console.log("Error:", error.message);
+                    }
+
+            } catch (error) {
+                console.error("Error al crear el producto:", error);
+                alert("Error al crear el producto. Por favor, intenta nuevamente.");
+            }
+
+        });
+
+    </script>
+<%- include('partials/footer') %>

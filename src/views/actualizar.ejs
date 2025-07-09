@@ -1,30 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="style.css">
-
-</head>
-<body>
-    <div class="wrapper">
-        <div class="sidebar">
-            <h2>Sportswear <br> Dashboard</h2>
-            <ul>
-                <li><a href="index.html">TRAER</a></li>
-                <li><a href="get.html">TRAER POR ID</a></li>
-                <li><a href="post.html">CREAR</a></li>
-                <li><a href="put.html">MODIFICAR</a></li>
-                <li><a href="delete.html">ELIMINAR</a></li>
-            </ul>
-        </div>
-    </div>
-
+<%- include('partials/head') %> 
+<div class="wrapper">
+    <%- include('partials/nav') %>
     <main id="contenedor-get">
 
         <div id="getProduct-container" class="crudForm-container">
-            <h2>Consultar producto</h2>
+            <h2><%= tittle %></h2>
 
             <form id="getProduct-form">
                 <label for="idProd">Id producto</label>
@@ -44,7 +24,7 @@
         let getId_lista = document.getElementById("getId-list");
         let getProduct_form = document.getElementById("getProduct-form");
         let updateForm = document.getElementById("updateForm");
-        const url = "http://localhost:3000/"; // URL de la API
+        const url = "http://localhost:3000/api/"; // URL de la API
 
         getProduct_form.addEventListener("submit", async(event) => {
             event.preventDefault(); // evita que el formulario se envíe de forma tradicional
@@ -126,9 +106,9 @@
                     <form autocomplete="off" id="updateProductos_form" >
                         <label for="categoryProd">Categoria</label>
                         <select name="categoria" id="categoryProd" required>
-                            <option value="indumentaria">Indumentaria</option>
-                            <option value="calzado">Calzado</option>
-                            <option value="accesorios">Accesorios</option>
+                            <option value="Indumentaria">Indumentaria</option>
+                            <option value="Calzado">Calzado</option>
+                            <option value="Accesorios">Accesorios</option>
                         </select>
 
                         <label for="marcaProd">Marca</label>
@@ -177,7 +157,7 @@
             }
 
             try {
-                let response = await fetch(`http://localhost:3000/productos`, {
+                let response = await fetch(`${url}productos`, {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json"
@@ -203,5 +183,4 @@
             }   
         };
     </script>
-</body>
-</html>
+<%- include('partials/footer') %>
