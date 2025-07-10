@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-
+//centraliza la configuracion de entorn (puerto y base de datos)
 dotenv.config(); // Cargamos las variables de entorno desde el archivo .env
 
 export default {

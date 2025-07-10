@@ -12,9 +12,8 @@ export const viewList = async(req, res) => {
         });
 
     } catch (error) {
-
+        console.log(error);
     }
-
 };
 
 export const viewListConsultById = async(req, res) => {
